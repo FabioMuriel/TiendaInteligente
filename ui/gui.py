@@ -23,7 +23,6 @@ class TiendaApp:
         self.main_frame = Frame(root, bg=self.bg_color, padx=20, pady=20)
         self.main_frame.pack(fill=BOTH, expand=True)
 
-        # Título
         self.label_titulo = Label(
             self.main_frame,
             text="Mercado Inteligente",
@@ -33,7 +32,6 @@ class TiendaApp:
         )
         self.label_titulo.grid(row=0, column=0, columnspan=2, pady=(0, 20))
 
-        # Formulario para agregar productos
         self.label_nombre = Label(
             self.main_frame,
             text="Nombre del Producto:",
@@ -67,7 +65,6 @@ class TiendaApp:
         self.entry_cantidad = Entry(self.main_frame, font=self.font, bd=2, relief=FLAT)
         self.entry_cantidad.grid(row=3, column=1, padx=10, pady=10, sticky=EW)
 
-        # Botones con estilo moderno
         self.boton_agregar = Button(
             self.main_frame,
             text="Agregar al Carrito",
@@ -96,7 +93,6 @@ class TiendaApp:
         )
         self.boton_finalizar.grid(row=5, column=0, columnspan=2, pady=10, sticky=EW)
 
-        # Área del carrito
         self.label_carrito = Label(
             self.main_frame,
             text="Carrito de Compras",
@@ -118,7 +114,6 @@ class TiendaApp:
         )
         self.texto_carrito.grid(row=7, column=0, columnspan=2, padx=10, pady=10, sticky=EW)
 
-        # Configurar el grid para que sea responsivo
         self.main_frame.grid_columnconfigure(1, weight=1)
 
     def agregar_al_carrito(self):
@@ -141,13 +136,11 @@ class TiendaApp:
         self.mostrar_recibo(recibo)
 
     def mostrar_recibo(self, recibo):
-        # Crear una ventana emergente para el recibo
         recibo_window = Toplevel(self.root)
         recibo_window.title("Recibo de Compra")
         recibo_window.geometry("500x400")
         recibo_window.configure(bg="#f0f0f0")
 
-        # Título del recibo
         label_titulo = Label(
             recibo_window,
             text="Recibo de Compra",
@@ -157,7 +150,6 @@ class TiendaApp:
         )
         label_titulo.pack(pady=10)
 
-        # Fecha
         label_fecha = Label(
             recibo_window,
             text=f"Fecha: {recibo['fecha']}",
@@ -167,24 +159,20 @@ class TiendaApp:
         )
         label_fecha.pack(pady=5)
 
-        # Tabla de productos
         frame_tabla = Frame(recibo_window, bg="#f0f0f0")
         frame_tabla.pack(pady=10)
 
-        # Encabezados de la tabla
         Label(frame_tabla, text="Producto", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=0, padx=10, pady=5)
         Label(frame_tabla, text="Cantidad", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=1, padx=10, pady=5)
         Label(frame_tabla, text="Precio Unitario", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=2, padx=10, pady=5)
         Label(frame_tabla, text="Subtotal", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=3, padx=10, pady=5)
 
-        # Filas de productos
         for i, producto in enumerate(recibo["productos"], start=1):
             Label(frame_tabla, text=producto["nombre"], font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=0, padx=10, pady=5)
             Label(frame_tabla, text=producto["cantidad"], font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=1, padx=10, pady=5)
             Label(frame_tabla, text=f"${producto['precio_unitario']:.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=2, padx=10, pady=5)
             Label(frame_tabla, text=f"${producto['subtotal']:.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=3, padx=10, pady=5)
 
-        # Totales
         Label(recibo_window, text=f"Total: ${recibo['total']:.2f}", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").pack(pady=5)
         Label(recibo_window, text=f"Descuento ({recibo['descuento']:.0f}%): ${recibo['total'] * (recibo['descuento'] / 100):.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").pack(pady=5)
         Label(recibo_window, text=f"Total a pagar: ${recibo['total_con_descuento']:.2f}", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#4CAF50").pack(pady=10)
