@@ -1,7 +1,3 @@
-¡Claro! Aquí tienes un archivo `README.md` que explica el proyecto de manera clara y detallada. Este archivo es esencial para que cualquier persona que revise el proyecto entienda su propósito, funcionalidades y cómo ejecutarlo.
-
----
-
 # **Mercado Inteligente - Proyecto de Gestión de Carrito de Compras**
 
 Este proyecto es una aplicación de **Mercado Inteligente** desarrollada en Python, que permite a los usuarios gestionar un carrito de compras, calcular costos, aplicar descuentos y generar un recibo de compra. La aplicación utiliza **Tkinter** para la interfaz gráfica (GUI), **SQLite** para la base de datos y sigue los principios de la **Programación Orientada a Objetos (POO)**.
