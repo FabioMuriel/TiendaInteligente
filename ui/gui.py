@@ -1,3 +1,4 @@
+# ui/gui.py
 from tkinter import *
 from tkinter import messagebox
 from services.carrito_service import CarritoService
@@ -9,16 +10,16 @@ class TiendaApp:
         self.root = root
         self.root.title("Mercado Inteligente")
         self.root.geometry("800x600")
-        self.root.configure(bg="#f0f0f0")
+        self.root.configure(bg="#2c3e50")
 
         self.carrito_service = CarritoService()
         self.producto_service = ProductoService()
 
         self.font = ("Helvetica", 12)
-        self.bg_color = "#ffffff"
-        self.button_color = "#4CAF50"
-        self.text_color = "#333333"
-        self.accent_color = "#2196F3"
+        self.bg_color = "#34495e" 
+        self.button_color = "#1abc9c"
+        self.text_color = "#ecf0f1"  
+        self.accent_color = "#3498db"
 
         self.main_frame = Frame(root, bg=self.bg_color, padx=20, pady=20)
         self.main_frame.pack(fill=BOTH, expand=True)
@@ -28,7 +29,7 @@ class TiendaApp:
             text="Mercado Inteligente",
             font=("Helvetica", 24, "bold"),
             bg=self.bg_color,
-            fg=self.accent_color,
+            fg=self.text_color,
         )
         self.label_titulo.grid(row=0, column=0, columnspan=2, pady=(0, 20))
 
@@ -108,7 +109,7 @@ class TiendaApp:
             width=50,
             font=self.font,
             bg="white",
-            fg=self.text_color,
+            fg="#333333", 
             bd=2,
             relief=FLAT,
         )
@@ -139,40 +140,43 @@ class TiendaApp:
         recibo_window = Toplevel(self.root)
         recibo_window.title("Recibo de Compra")
         recibo_window.geometry("500x400")
-        recibo_window.configure(bg="#f0f0f0")
+        recibo_window.configure(bg="#2c3e50")
+
+        recibo_frame = Frame(recibo_window, bg="#34495e", padx=20, pady=20)
+        recibo_frame.pack(fill=BOTH, expand=True)
 
         label_titulo = Label(
-            recibo_window,
+            recibo_frame,
             text="Recibo de Compra",
             font=("Helvetica", 18, "bold"),
-            bg="#f0f0f0",
-            fg="#333333",
+            bg="#34495e",
+            fg="#ecf0f1",
         )
         label_titulo.pack(pady=10)
 
         label_fecha = Label(
-            recibo_window,
+            recibo_frame,
             text=f"Fecha: {recibo['fecha']}",
             font=("Helvetica", 12),
-            bg="#f0f0f0",
-            fg="#333333",
+            bg="#34495e",
+            fg="#ecf0f1",
         )
         label_fecha.pack(pady=5)
 
-        frame_tabla = Frame(recibo_window, bg="#f0f0f0")
+        frame_tabla = Frame(recibo_frame, bg="#34495e")
         frame_tabla.pack(pady=10)
 
-        Label(frame_tabla, text="Producto", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=0, padx=10, pady=5)
-        Label(frame_tabla, text="Cantidad", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=1, padx=10, pady=5)
-        Label(frame_tabla, text="Precio Unitario", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=2, padx=10, pady=5)
-        Label(frame_tabla, text="Subtotal", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").grid(row=0, column=3, padx=10, pady=5)
+        Label(frame_tabla, text="Producto", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").grid(row=0, column=0, padx=10, pady=5)
+        Label(frame_tabla, text="Cantidad", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").grid(row=0, column=1, padx=10, pady=5)
+        Label(frame_tabla, text="Precio Unitario", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").grid(row=0, column=2, padx=10, pady=5)
+        Label(frame_tabla, text="Subtotal", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").grid(row=0, column=3, padx=10, pady=5)
 
         for i, producto in enumerate(recibo["productos"], start=1):
-            Label(frame_tabla, text=producto["nombre"], font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=0, padx=10, pady=5)
-            Label(frame_tabla, text=producto["cantidad"], font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=1, padx=10, pady=5)
-            Label(frame_tabla, text=f"${producto['precio_unitario']:.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=2, padx=10, pady=5)
-            Label(frame_tabla, text=f"${producto['subtotal']:.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").grid(row=i, column=3, padx=10, pady=5)
+            Label(frame_tabla, text=producto["nombre"], font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").grid(row=i, column=0, padx=10, pady=5)
+            Label(frame_tabla, text=producto["cantidad"], font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").grid(row=i, column=1, padx=10, pady=5)
+            Label(frame_tabla, text=f"${producto['precio_unitario']:.2f}", font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").grid(row=i, column=2, padx=10, pady=5)
+            Label(frame_tabla, text=f"${producto['subtotal']:.2f}", font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").grid(row=i, column=3, padx=10, pady=5)
 
-        Label(recibo_window, text=f"Total: ${recibo['total']:.2f}", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#333333").pack(pady=5)
-        Label(recibo_window, text=f"Descuento ({recibo['descuento']:.0f}%): ${recibo['total'] * (recibo['descuento'] / 100):.2f}", font=("Helvetica", 12), bg="#f0f0f0", fg="#333333").pack(pady=5)
-        Label(recibo_window, text=f"Total a pagar: ${recibo['total_con_descuento']:.2f}", font=("Helvetica", 12, "bold"), bg="#f0f0f0", fg="#4CAF50").pack(pady=10)
+        Label(recibo_frame, text=f"Total: ${recibo['total']:.2f}", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").pack(pady=5)
+        Label(recibo_frame, text=f"Descuento ({recibo['descuento']:.0f}%): ${recibo['total'] * (recibo['descuento'] / 100):.2f}", font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").pack(pady=5)
+        Label(recibo_frame, text=f"Total a pagar: ${recibo['total_con_descuento']:.2f}", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#1abc9c").pack(pady=10)
