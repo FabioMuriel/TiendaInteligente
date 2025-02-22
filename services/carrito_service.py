@@ -1,4 +1,3 @@
-# services/carrito_service.py
 from models.carrito import Carrito
 
 class CarritoService:

@@ -1,6 +1,5 @@
-# main.py
 from tkinter import Tk
-from ui.gui import TiendaApp
+from ui.login import LoginApp
 from database.database import Database
 
 if __name__ == "__main__":
@@ -8,7 +7,7 @@ if __name__ == "__main__":
     db = Database("tienda_inteligente.db")
     db.create_tables()
 
-    # Iniciar la aplicación
+    # Iniciar la aplicación con la ventana de login
     root = Tk()
-    app = TiendaApp(root)
+    app = LoginApp(root)
     root.mainloop()

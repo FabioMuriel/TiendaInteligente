@@ -10,10 +10,10 @@ class ProductoService:
         conn = self.db.connect()
         cursor = conn.cursor()
         cursor.execute("INSERT INTO productos (nombre, precio) VALUES (?, ?)", (nombre, precio))
-        producto_id = cursor.lastrowid  # Obtener el ID del producto recién insertado
+        producto_id = cursor.lastrowid
         conn.commit()
         conn.close()
-        return Producto(producto_id, nombre, precio)  # Devolver un objeto Producto
+        return Producto(producto_id, nombre, precio)
 
     def obtener_productos(self):
         conn = self.db.connect()

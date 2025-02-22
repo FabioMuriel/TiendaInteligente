@@ -1,6 +1,5 @@
-# ui/gui.py
 from tkinter import *
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 from services.carrito_service import CarritoService
 from services.producto_service import ProductoService
 from utils.receipt import generar_datos_recibo

@@ -1,4 +1,3 @@
-# database/database.py
 import sqlite3
 
 class Database:
@@ -8,10 +7,20 @@ class Database:
     def connect(self):
         return sqlite3.connect(self.db_name)
 
-    # database/database.py
     def create_tables(self):
         conn = self.connect()
         cursor = conn.cursor()
+
+        # Crear tabla de productos
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS productos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                precio REAL NOT NULL
+            )
+        ''')
+
+        # Crear tabla de usuarios
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,5 +29,6 @@ class Database:
                 password TEXT NOT NULL
             )
         ''')
+
         conn.commit()
         conn.close()
