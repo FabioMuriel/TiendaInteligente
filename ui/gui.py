@@ -33,6 +33,7 @@ class TiendaApp:
         )
         self.label_titulo.grid(row=0, column=0, columnspan=2, pady=(0, 20))
 
+        # Campo de nombre del producto
         self.label_nombre = Label(
             self.main_frame,
             text="Nombre del Producto:",
@@ -44,6 +45,7 @@ class TiendaApp:
         self.entry_nombre = Entry(self.main_frame, font=self.font, bd=2, relief=FLAT)
         self.entry_nombre.grid(row=1, column=1, padx=10, pady=10, sticky=EW)
 
+        # Campo de precio (solo números)
         self.label_precio = Label(
             self.main_frame,
             text="Precio Unitario:",
@@ -52,9 +54,20 @@ class TiendaApp:
             fg=self.text_color,
         )
         self.label_precio.grid(row=2, column=0, padx=10, pady=10, sticky=W)
-        self.entry_precio = Entry(self.main_frame, font=self.font, bd=2, relief=FLAT)
+
+        # Validación para el campo de precio
+        validacion_precio = self.main_frame.register(self.validar_numeros)  # Registrar la función de validación
+        self.entry_precio = Entry(
+            self.main_frame,
+            font=self.font,
+            bd=2,
+            relief=FLAT,
+            validate="key",  # Validar en cada tecla presionada
+            validatecommand=(validacion_precio, "%P")  # Pasar el texto futuro (%P) a la función
+        )
         self.entry_precio.grid(row=2, column=1, padx=10, pady=10, sticky=EW)
 
+        # Campo de cantidad (solo números enteros)
         self.label_cantidad = Label(
             self.main_frame,
             text="Cantidad:",
@@ -63,9 +76,20 @@ class TiendaApp:
             fg=self.text_color,
         )
         self.label_cantidad.grid(row=3, column=0, padx=10, pady=10, sticky=W)
-        self.entry_cantidad = Entry(self.main_frame, font=self.font, bd=2, relief=FLAT)
+
+        # Validación para el campo de cantidad
+        validacion_cantidad = self.main_frame.register(self.validar_enteros)  # Registrar la función de validación
+        self.entry_cantidad = Entry(
+            self.main_frame,
+            font=self.font,
+            bd=2,
+            relief=FLAT,
+            validate="key",  # Validar en cada tecla presionada
+            validatecommand=(validacion_cantidad, "%P")  # Pasar el texto futuro (%P) a la función
+        )
         self.entry_cantidad.grid(row=3, column=1, padx=10, pady=10, sticky=EW)
 
+        # Botón de agregar al carrito
         self.boton_agregar = Button(
             self.main_frame,
             text="Agregar al Carrito",
@@ -80,6 +104,7 @@ class TiendaApp:
         )
         self.boton_agregar.grid(row=4, column=0, columnspan=2, pady=10, sticky=EW)
 
+        # Botón de finalizar compra
         self.boton_finalizar = Button(
             self.main_frame,
             text="Finalizar Compra",
@@ -94,6 +119,7 @@ class TiendaApp:
         )
         self.boton_finalizar.grid(row=5, column=0, columnspan=2, pady=10, sticky=EW)
 
+        # Área del carrito
         self.label_carrito = Label(
             self.main_frame,
             text="Carrito de Compras",
@@ -119,9 +145,23 @@ class TiendaApp:
 
     def agregar_al_carrito(self):
         nombre = self.entry_nombre.get()
-        precio = float(self.entry_precio.get())
-        cantidad = int(self.entry_cantidad.get())
+        precio = self.entry_precio.get()
+        cantidad = self.entry_cantidad.get()
 
+        # Validar que los campos no estén vacíos
+        if not nombre or not precio or not cantidad:
+            messagebox.showerror("Error", "Todos los campos son obligatorios")
+            return
+
+        # Convertir a números
+        try:
+            precio = float(precio)
+            cantidad = int(cantidad)
+        except ValueError:
+            messagebox.showerror("Error", "Precio y cantidad deben ser números válidos")
+            return
+
+        # Agregar producto al carrito
         producto = self.producto_service.crear_producto(nombre, precio)
         self.carrito_service.agregar_producto(producto, cantidad)
 
@@ -180,3 +220,19 @@ class TiendaApp:
         Label(recibo_frame, text=f"Total: ${recibo['total']:.2f}", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#ecf0f1").pack(pady=5)
         Label(recibo_frame, text=f"Descuento ({recibo['descuento']:.0f}%): ${recibo['total'] * (recibo['descuento'] / 100):.2f}", font=("Helvetica", 12), bg="#34495e", fg="#ecf0f1").pack(pady=5)
         Label(recibo_frame, text=f"Total a pagar: ${recibo['total_con_descuento']:.2f}", font=("Helvetica", 12, "bold"), bg="#34495e", fg="#1abc9c").pack(pady=10)
+
+    def validar_numeros(self, texto_futuro):
+        # Permitir solo números y un punto decimal
+        if texto_futuro == "":  # Permitir campo vacío
+            return True
+        try:
+            float(texto_futuro)  # Intentar convertir a float
+            return True
+        except ValueError:
+            return False  # No es un número válido
+
+    def validar_enteros(self, texto_futuro):
+        # Permitir solo números enteros
+        if texto_futuro == "":  # Permitir campo vacío
+            return True
+        return texto_futuro.isdigit()  # Solo dígitos enteros
