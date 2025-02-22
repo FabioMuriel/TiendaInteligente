@@ -54,7 +54,7 @@ Este proyecto es una aplicación de **Mercado Inteligente** desarrollada en Pyth
 ## **Estructura del Proyecto**
 
 ```
-mercado-inteligente/
+tienda_inteligente/
 │
 ├── database/
 │   ├── __init__.py
@@ -64,15 +64,18 @@ mercado-inteligente/
 │   ├── __init__.py
 │   ├── producto.py
 │   ├── carrito.py
+│   ├── usuario.py
 │
 ├── services/
 │   ├── __init__.py
 │   ├── carrito_service.py
 │   ├── producto_service.py
+│   ├── usuario_service.py
 │
 ├── ui/
 │   ├── __init__.py
 │   ├── gui.py
+│   ├── login.py
 │
 ├── utils/
 │   ├── __init__.py
