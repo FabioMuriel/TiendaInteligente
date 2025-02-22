@@ -1,4 +1,3 @@
-# services/producto_service.py
 from models.producto import Producto
 from database.database import Database
 

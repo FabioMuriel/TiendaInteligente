@@ -14,14 +14,12 @@ class TiendaApp:
         self.carrito_service = CarritoService()
         self.producto_service = ProductoService()
 
-        # Estilos modernos
         self.font = ("Helvetica", 12)
         self.bg_color = "#ffffff"
         self.button_color = "#4CAF50"
         self.text_color = "#333333"
         self.accent_color = "#2196F3"
 
-        # Frame principal
         self.main_frame = Frame(root, bg=self.bg_color, padx=20, pady=20)
         self.main_frame.pack(fill=BOTH, expand=True)
 
